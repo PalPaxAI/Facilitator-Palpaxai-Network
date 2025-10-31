@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>PalPaxAI Facilitator — Solana‑first, multi‑network facilitator.</title>
+    <meta name="application-name" content="PalPaxAI Facilitator"/>
+    <meta name="apple-mobile-web-app-title" content="PalPaxAI Facilitator"/>
+    <link rel="icon" type="image/png" href="/Facilitator/logo-50.png"/>
+    <meta name="description" content="Process x402 payments across Solana and EVM networks with one drop‑in endpoint. No API keys. Supports all tokens. Fees covered for a gasless buyer/merchant experience."/>
+    <link rel="canonical" href="https://facilitator.PalPaxAI.network"/>
+    <meta name="robots" content="index,follow"/>
+    <meta name="theme-color" content="#000000"/>
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="PalPaxAI x402 Facilitator — Solana‑first, multi‑network payments"/>
+    <meta name="twitter:description" content="Process x402 payments across Solana and EVM networks with one drop‑in endpoint. No API keys. Fees covered for a gasless buyer/merchant experience."/>
+    <meta name="twitter:image" content="https://facilitator.PalPaxAI.network/opengraph-image.png"/>
+    <meta name="twitter:image:alt" content="PalPaxAI Facilitator homepage image"/>
+    <meta name="twitter:site" content="@PalPaxAINetwork"/>
+    <meta name="twitter:domain" content="facilitator.PalPaxAI.network"/>
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"WebSite","name":"PalPaxAI","url":"https://facilitator.PalPaxAI.network","sameAs":["https://x.com/PalPaxAINetwork","{{GITHUB_URL}}","https://t.me/PalPaxAINetwork","https://docs.PalPaxAI.network/"]}
+    </script>
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"Organization","name":"PalPaxAI","url":"https://PalPaxAI.network","logo":"https://PalPaxAI.network/logo-50.png","sameAs":["https://x.com/PalPaxAINetwork","https://github.com/PalPaxAINetwork","https://t.me/PalPaxAINetwork","https://docs.PalPaxAI.network"]}
+    </script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: { extend: { colors: { brand: "#000000" } } }
+      };
+    </script>
+    <!-- Lucide icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      :root{
+        --brand:#000000;
+        --ink:#111111;
+        --muted:#6b7280;
+        --border:#e5e7eb;
+        --gap: 150px;       /* distance between lines  */
+        --line: 1px;       /* line thickness          */
+        --lineColor: rgba(255,255,255,.35);
+      }
+      code { background: #f1f5f9; padding: 2px 4px; border-radius: 4px; }
+      .card { border: 1px solid #e5e7eb; border-radius: 0.75rem; background: #fff; }
+      .card-shadow { box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+      .btn { display:inline-flex; align-items:center; gap:0.5rem; font-weight:500; border-radius:0.75rem; padding:0.5rem 0.75rem; border:1px solid #e5e7eb; }
+      .btn-primary { background:#000; color:#fff; border-color:#000; }
+      .btn-ghost { background:#fff; color:#111; }
+      .btn-outline { background:#fff; color:#111; }
+      .badge { display:inline-flex; align-items:center; border:1px solid #e5e7eb; border-radius:999px; padding:0.25rem 0.5rem; }
+       .input { border:1px solid #e5e7eb; border-radius:0.5rem; padding:0.5rem 0.75rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; word-break: break-all; }
+      
+      /* Reset margins and ensure full width */
+      * {
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+      }
+      
+       /* Ensure navbar spans full width */
+       header {
+         width: 100%;
+         position: sticky;
+         top: 0;
+         z-index: 30;
+       }
+       
+       /* Prevent hero section overflow */
+       #hero {
+         overflow-x: hidden;
+       }
+       
+       #hero .grid {
+         min-width: 0;
+       }
+       
+       #hero .grid > div {
+         min-width: 0;
+         overflow: hidden;
+       }
+       
+       /* Card content wrapping */
+       .card {
+         word-wrap: break-word;
+         overflow-wrap: break-word;
+         hyphens: auto;
+       }
+       
+       .card ol li {
+         word-wrap: break-word;
+         overflow-wrap: break-word;
+       }
+       
+       .card code {
+         word-break: break-all;
+         white-space: normal;
+       }
+      
+      .bg-grid-pattern {
+        background-image: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.1) 1px,
+            transparent 1px
+          ),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+        background-size: 24px 24px;
+      }
+      
+      /* Enhanced body styles with background grid pattern */
+      body {
+        font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        min-height: 100vh;
+        
+        /* grid (top layers) + pastel background (bottom layers) */
+        background-image:
+          /* grid lines */
+          repeating-linear-gradient(45deg,
+            var(--lineColor) 0 calc(var(--line)),
+            transparent calc(var(--line)) calc(var(--gap))
+          ),
+          repeating-linear-gradient(-45deg,
+            var(--lineColor) 0 calc(var(--line)),
+            transparent calc(var(--line)) calc(var(--gap))
+          ),
+
+          /* gentle color wash */
+          radial-gradient(120% 100% at 10% 0%,
+            #eaf1ff 0%, rgba(234,241,255,0) 60%),
+          radial-gradient(120% 100% at 100% 0%,
+            #f3e6ff 0%, rgba(243,230,255,0) 55%),
+          linear-gradient(120deg,#eef2ff 0%, #efe9ff 100%);
+          
+        background-size: cover;
+        background-attachment: fixed;
+        /* end of background grid pattern */
+      }
+
+      /* gradient without gridlines for sections */
+      .bg-soft-gradient {
+        background-image:
+          radial-gradient(120% 100% at 10% 0%,
+            #eaf1ff 0%, rgba(234,241,255,0) 60%),
+          radial-gradient(120% 100% at 100% 0%,
+            #f3e6ff 0%, rgba(243,230,255,0) 55%),
+          linear-gradient(120deg,#eef2ff 0%, #efe9ff 100%);
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        min-height: 100%;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-white text-neutral-900 font-sans">
+    <!-- Nav -->
+    <header class="sticky top-0 z-30 backdrop-blur bg-white/70 border-b border-neutral-200 w-full">
+      <div class="w-full max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <img src="/Facilitator/logo-50.png" alt="PalPaxAI" class="h-8 w-8 rounded-xl" />
+          <span class="font-semibold tracking-tight">PalPaxAI Facilitator</span>
+        </div>
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-2">
+          <a href="#features" class="btn btn-ghost text-neutral-700 hover:text-black">Features</a>
+          <a href="https://docs.PalPaxAI.network/" target="_blank" rel="noreferrer" class="btn btn-ghost text-neutral-700 hover:text-black">Docs</a>
+          <a href="#get-started" class="btn btn-primary">Get started</a>
+        </nav>
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-neutral-100 transition-colors">
+          <i data-lucide="menu" class="h-5 w-5"></i>
+        </button>
+      </div>
+      <!-- Mobile Navigation Menu -->
+      <div id="mobile-menu" class="md:hidden hidden border-t border-neutral-200 bg-white/95 backdrop-blur">
+        <div class="px-4 py-4 space-y-2">
+          <a href="#features" class="block px-3 py-2 rounded-lg text-neutral-700 hover:bg-neutral-100 transition-colors">Features</a>
+          <a href="https://docs.PalPaxAI.network/" target="_blank" rel="noreferrer" class="block px-3 py-2 rounded-lg text-neutral-700 hover:bg-neutral-100 transition-colors">Docs</a>
+          <a href="#get-started" class="block px-3 py-2 rounded-lg bg-black text-white hover:bg-neutral-800 transition-colors text-center">Get started</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="hero" class="relative w-full overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">Solana‑first, multi‑network facilitator.</h1>
+          <p class="mt-4 text-base sm:text-lg text-neutral-600">Process x402 payments across Solana and EVM networks with one drop‑in endpoint. No API keys, no blockchain headaches—just plug and play.</p>
+
+          <div class="mt-6 space-y-3">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full min-w-0">
+              <span class="text-sm text-neutral-500 whitespace-nowrap flex-shrink-0">Facilitator URL</span>
+              <div class="flex items-center gap-2 w-full min-w-0">
+                <input id="facilitator-url" readonly class="input w-full text-sm min-w-0" />
+                <button id="copy-btn" class="btn btn-ghost text-sm flex-shrink-0">
+                  <i data-lucide="copy" class="h-4 w-4"></i>
+                  <span class="hidden sm:inline">Copy</span>
+                </button>
+              </div>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 w-full min-w-0">
+              <a href="#get-started" class="btn btn-primary shadow-sm justify-center sm:justify-start flex-shrink-0"><i data-lucide="zap" class="h-4 w-4"></i>Start in 2m</a>
+              <a href="https://docs.PalPaxAI.network/" target="_blank" rel="noreferrer" class="btn btn-outline justify-center sm:justify-start flex-shrink-0"><i data-lucide="book" class="h-4 w-4"></i>Docs</a>
+              <a href="https://discord.gg/eWJRwMpebQ" target="_blank" rel="noreferrer" class="btn btn-ghost justify-center sm:justify-start flex-shrink-0"><i data-lucide="help-circle" class="h-4 w-4"></i>Live support</a>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-2 text-sm text-neutral-600">
+            <div class="flex items-center gap-2">
+              <i data-lucide="shield-check" class="h-4 w-4 flex-shrink-0"></i>
+              <span>Network fees covered for buyers & merchants</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i data-lucide="wallet" class="h-4 w-4 flex-shrink-0"></i>
+              <span>No API keys required</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card card-shadow">
+            <div class="px-6 pt-6">
+              <div class="text-xl font-semibold flex items-center gap-2"><i data-lucide="terminal-square" class="h-5 w-5"></i>Drop‑in setup</div>
+              <div class="text-neutral-600">Point your merchant at the facilitator and you’re done.</div>
+            </div>
+            <div class="px-6 py-4">
+              <ol class="space-y-3 text-sm">
+                <li class="flex items-start gap-2 min-w-0">1.<span class="min-w-0">Set <code>FACILITATOR_URL=<span id="facilitator-url-inline"></span></code> in your server.</span></li>
+                <li class="flex items-start gap-2 min-w-0">2.<span class="min-w-0">Choose a <b>network</b>: <br class="sm:hidden"/><code>solana</code>, <code>solana-devnet</code>, <code>base</code>, <code>base-sepolia</code>, <br class="sm:hidden"/><code>polygon</code>, <code>polygon-amoy</code>, <code>avalanche</code>, <code>avalanche-fuji</code>, <br class="sm:hidden"/><code>sei</code>, <code>sei-testnet</code>, <code>peaq</code>, <code>iotex</code>.</span></li>
+                <li class="flex items-start gap-2 min-w-0">3.<span class="min-w-0">Ship. The facilitator verifies & settles payments on your behalf.</span></li>
+              </ol>
+              <div class="my-4 h-px bg-neutral-200"></div>
+              <div class="flex flex-wrap gap-2" aria-label="Supported networks">
+                <img src="/Facilitator/icons/solana-circular.svg" alt="Solana" class="h-6 w-6" title="Solana" />
+                <img src="/Facilitator/icons/base-circular.svg" alt="Base" class="h-6 w-6" title="Base" />
+                <img src="/Facilitator/icons/avax-circular.svg" alt="Avalanche" class="h-6 w-6" title="Avalanche" />
+                <img src="/Facilitator/icons/polygon-circular.svg" alt="Polygon" class="h-6 w-6" title="Polygon" />
+                <img src="/Facilitator/icons/sei-circular.svg" alt="Sei" class="h-6 w-6" title="Sei" />
+                <img src="/Facilitator/icons/iotex-circular.svg" alt="IoTeX" class="h-6 w-6" title="IoTeX" />
+                <img src="/Facilitator/icons/peaq-circular.svg" alt="Peaq" class="h-6 w-6" title="Peaq" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <!-- Features -->
+    <section id="features" class="py-12 bg-neutral-50 bg-soft-gradient w-full">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-2xl font-semibold mb-6">Features</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card">
+          <div class="p-6">
+            <div class="text-lg font-semibold flex items-center gap-2"><i data-lucide="network" class="h-5 w-5"></i> Multi‑network</div>
+            <div class="text-sm text-neutral-600 mt-1">Solana‑first, with EVM support (Base, Avalanche, Sei, IoTeX).</div>
+            <div class="text-sm text-neutral-600 mt-3">Point one endpoint at many chains. The facilitator abstracts network quirks so your server doesn’t have to.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="p-6">
+            <div class="text-lg font-semibold flex items-center gap-2"><i data-lucide="globe-2" class="h-5 w-5"></i> Any token</div>
+            <div class="text-sm text-neutral-600 mt-1">ERC‑20 on EVM; SPL & Token‑2022 on Solana.</div>
+            <div class="text-sm text-neutral-600 mt-3">Use stablecoins or your own tokens. Configure per‑endpoint pricing in fiat or atomic units.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="p-6">
+            <div class="text-lg font-semibold flex items-center gap-2"><i data-lucide="zap" class="h-5 w-5"></i> Gasless experience</div>
+            <div class="text-sm text-neutral-600 mt-1">No blockchain fees for buyers or merchants.</div>
+            <div class="text-sm text-neutral-600 mt-3">The facilitator covers network fees and handles verification/settlement so you can focus on your product.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="p-6">
+            <div class="text-lg font-semibold flex items-center gap-2"><i data-lucide="link" class="h-5 w-5"></i> 1‑second start</div>
+            <div class="text-sm text-neutral-600 mt-1">No API keys. Just plug & play.</div>
+            <div class="text-sm text-neutral-600 mt-3">Start with a single env var and standard endpoints (<code>/verify</code>, <code>/settle</code>, <code>/list</code>).</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="p-6">
+            <div class="text-lg font-semibold flex items-center gap-2"><i data-lucide="shield-check" class="h-5 w-5"></i> Consistent API</div>
+            <div class="text-sm text-neutral-600 mt-1">One simple interface across networks.</div>
+            <div class="text-sm text-neutral-600 mt-3">You get reliability, observability, and reuse across multiple merchants and apps.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="p-6">
+            <div class="text-lg font-semibold flex items-center gap-2"><i data-lucide="bar-chart-3" class="h-5 w-5"></i> Built for scale</div>
+            <div class="text-sm text-neutral-600 mt-1">Designed for human & agentic use‑cases.</div>
+            <div class="text-sm text-neutral-600 mt-3">From pay‑per‑call APIs to AI agents, settle payments in under a second when the chain confirms.</div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats / Status -->
+    <!-- <section id="stats" class="py-12">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-2xl font-semibold">Live status</h2>
+          <span class="badge rounded-full bg-green-600 text-white" data-metric-id="status">Operational</span>
+        </div>
+        <div class="grid md:grid-cols-4 gap-4">
+          <div class="card">
+            <div class="p-4">
+              <div class="text-xs uppercase tracking-wide text-neutral-500">30‑day uptime</div>
+              <div class="text-3xl font-semibold" data-metric-id="uptime-30d">99.99%</div>
+              <div class="text-xs text-neutral-500 mt-1">SLA target ≥99.95%</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="p-4">
+              <div class="text-xs uppercase tracking-wide text-neutral-500">Verify latency (p50)</div>
+              <div class="text-3xl font-semibold" data-metric-id="verify-latency-p50">120 ms</div>
+              <div class="text-xs text-neutral-500 mt-1">Rolling 24h</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="p-4">
+              <div class="text-xs uppercase tracking-wide text-neutral-500">Settlements (24h)</div>
+              <div class="text-3xl font-semibold" data-metric-id="settlements-24h">12,842</div>
+              <div class="text-xs text-neutral-500 mt-1">Across all networks</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="p-4">
+              <div class="text-xs uppercase tracking-wide text-neutral-500">Networks supported</div>
+              <div class="text-3xl font-semibold">5 mainnets</div>
+              <div class="text-xs text-neutral-500 mt-1">+ testnets</div>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-500 mt-3">These are example figures; wire them to real metrics from your status API or observability stack.</p>
+      </div>
+    </section> -->
+
+    <!-- Get Started -->
+    <section id="get-started" class="py-12 bg-neutral-50 bg-soft-gradient w-full">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-2xl font-semibold mb-2">Merchants</h2>
+        <ul class="not-prose mb-6 pb-[1px] flex-none min-w-full overflow-auto border-b border-gray-400 gap-x-6 flex">
+          <li>
+            <div class="flex text-sm items-center gap-1.5 leading-6 font-semibold whitespace-nowrap pt-3 pb-2.5 -mb-px max-w-max border-b text-primary border-current">
+              Set up your resource server.
+            </div>
+          </li>
+        </ul>
+        <div class="prose overflow-x-auto mb-12">
+          <div class="card-group not-prose grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <a class="card block font-normal group relative my-2 ring-2 ring-transparent rounded-2xl bg-white border border-gray-950/10 overflow-hidden w-full cursor-pointer hover:!border-black transition-colors" href="https://docs.PalPaxAI.network/x402/servers/typescript/express" target="_blank" rel="noreferrer">
+              <div class="px-6 py-5 relative" data-component-part="card-content-container">
+                <div class="h-6 w-6 fill-gray-800 text-gray-800" data-component-part="card-icon">
+                  <i data-lucide="server" class="h-6 w-6 text-gray-800"></i>
+                </div>
+                <div>
+                  <h2 class="not-prose font-semibold text-base text-gray-800 mt-4" contenteditable="false" data-component-part="card-title">Express Quickstart</h2>
+                  <div class="prose mt-1 font-normal text-sm leading-6 text-gray-600" data-component-part="card-content">
+                    <span data-as="p">Get started with Express.js in minutes.</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a class="card block font-normal group relative my-2 ring-2 ring-transparent rounded-2xl bg-white border border-gray-950/10 overflow-hidden w-full cursor-pointer hover:!border-black transition-colors" href="https://docs.PalPaxAI.network/x402/servers/typescript/hono" target="_blank" rel="noreferrer">
+              <div class="px-6 py-5 relative" data-component-part="card-content-container">
+                <div class="h-6 w-6 fill-gray-800 text-gray-800 " data-component-part="card-icon">
+                  <i data-lucide="server" class="h-6 w-6 text-gray-800"></i>
+                </div>
+                <div>
+                  <h2 class="not-prose font-semibold text-base text-gray-800 mt-4" contenteditable="false" data-component-part="card-title">Hono</h2>
+                  <div class="prose mt-1 font-normal text-sm leading-6 text-gray-600" data-component-part="card-content">
+                    <span data-as="p">Quickstart for building an x402-enabled server with Hono.</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a class="card block font-normal group relative my-2 ring-2 ring-transparent rounded-2xl bg-white border border-gray-950/10 overflow-hidden w-full cursor-pointer hover:!border-black transition-colors" href="https://docs.PalPaxAI.network/x402/quickstart" target="_blank" rel="noreferrer">
+              <div class="px-6 py-5 relative" data-component-part="card-content-container">
+                <div class="h-6 w-6 fill-gray-800 text-gray-800" data-component-part="card-icon">
+                  <i data-lucide="server" class="h-6 w-6 text-gray-800"></i>
+                </div>
+                <div>
+                  <h2 class="not-prose font-semibold text-base text-gray-800 mt-4" contenteditable="false" data-component-part="card-title">All Server Options</h2>
+                  <div class="prose mt-1 font-normal text-sm leading-6 text-gray-600" data-component-part="card-content">
+                    <span data-as="p">Explore all available server frameworks.</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <h2 class="text-2xl font-semibold mb-2">Clients</h2>
+        <ul class="not-prose mb-6 pb-[1px] flex-none min-w-full overflow-auto border-b border-gray-400 gap-x-6 flex">
+          <li>
+            <div class="flex text-sm items-center gap-1.5 leading-6 font-semibold whitespace-nowrap pt-3 pb-2.5 -mb-px max-w-max border-b text-primary border-current">
+              Buyers: make paid calls automatically.
+            </div>
+          </li>
+        </ul>
+        <div class="prose overflow-x-auto mb-12">
+          <div class="card-group not-prose grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <a class="card block font-normal group relative my-2 ring-2 ring-transparent rounded-2xl bg-white border border-gray-950/10 overflow-hidden w-full cursor-pointer hover:!border-black transition-colors" href="https://docs.PalPaxAI.network/x402/clients/typescript/axios" target="_blank" rel="noreferrer">
+              <div class="px-6 py-5 relative" data-component-part="card-content-container">
+                <div class="h-6 w-6 fill-gray-800 text-gray-800 " data-component-part="card-icon">
+                  <i data-lucide="code" class="h-6 w-6 text-gray-800 "></i>
+                </div>
+                <div>
+                  <h2 class="not-prose font-semibold text-base text-gray-800 mt-4" contenteditable="false" data-component-part="card-title">Axios Client</h2>
+                  <div class="prose mt-1 font-normal text-sm leading-6 text-gray-600 " data-component-part="card-content">
+                    <span data-as="p">TypeScript client with Axios for HTTP requests.</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a class="card block font-normal group relative my-2 ring-2 ring-transparent rounded-2xl bg-white  border border-gray-950/10  overflow-hidden w-full cursor-pointer hover:!border-black transition-colors" href="https://docs.PalPaxAI.network/x402/clients/typescript/fetch" target="_blank" rel="noreferrer">
+              <div class="px-6 py-5 relative" data-component-part="card-content-container">
+                <div class="h-6 w-6 fill-gray-800  text-gray-800 " data-component-part="card-icon">
+                  <i data-lucide="code" class="h-6 w-6 text-gray-800 "></i>
+                </div>
+                <div>
+                  <h2 class="not-prose font-semibold text-base text-gray-800  mt-4" contenteditable="false" data-component-part="card-title">Fetch Client</h2>
+                  <div class="prose mt-1 font-normal text-sm leading-6 text-gray-600 " data-component-part="card-content">
+                    <span data-as="p">TypeScript client using native Fetch API.</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a class="card block font-normal group relative my-2 ring-2 ring-transparent rounded-2xl bg-white  border border-gray-950/10  overflow-hidden w-full cursor-pointer hover:!border-black  transition-colors" href="https://docs.PalPaxAI.network/x402/quickstart" target="_blank" rel="noreferrer">
+              <div class="px-6 py-5 relative" data-component-part="card-content-container">
+                <div class="h-6 w-6 fill-gray-800  text-gray-800 " data-component-part="card-icon">
+                  <i data-lucide="code" class="h-6 w-6 text-gray-800 "></i>
+                </div>
+                <div>
+                  <h2 class="not-prose font-semibold text-base text-gray-800  mt-4" contenteditable="false" data-component-part="card-title">All Client Options</h2>
+                  <div class="prose mt-1 font-normal text-sm leading-6 text-gray-600 " data-component-part="card-content">
+                    <span data-as="p">Explore all available client frameworks.</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <h2 class="text-2xl font-semibold mb-2">Try it for free</h2>
+        <ul class="not-prose mb-6 pb-[1px] flex-none min-w-full overflow-auto border-b border-gray-400 gap-x-6 flex ">
+          <li>
+            <div class="flex text-sm items-center gap-1.5 leading-6 font-semibold whitespace-nowrap pt-3 pb-2.5 -mb-px max-w-max border-b text-primary border-current">
+              Run real payments—instantly refunded.
+            </div>
+          </li>
+        </ul>
+        <div class="prose overflow-x-auto mb-8">
+          <div class="card-group not-prose grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a class="card block font-normal group relative my-2 ring-2 ring-transparent rounded-2xl bg-white  border border-gray-950/10  overflow-hidden w-full cursor-pointer hover:!border-black  transition-colors" href="https://x402.PalPaxAI.network/" target="_blank" rel="noreferrer">
+              <div class="px-6 py-5 relative" data-component-part="card-content-container">
+                <div class="h-6 w-6 fill-gray-800  text-gray-800 " data-component-part="card-icon">
+                  <i data-lucide="book-open" class="h-6 w-6 text-gray-800 "></i>
+                </div>
+                <div>
+                  <h2 class="not-prose font-semibold text-base text-gray-800  mt-4" contenteditable="false" data-component-part="card-title">Echo Merchant</h2>
+                  <div class="prose mt-1 font-normal text-sm leading-6 text-gray-600 " data-component-part="card-content">
+                    <span data-as="p">Test the complete payment flow with our demo merchant.</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a class="card block font-normal group relative my-2 ring-2 ring-transparent rounded-2xl bg-white  border border-gray-950/10  overflow-hidden w-full cursor-pointer hover:!border-black  transition-colors" href="https://docs.PalPaxAI.network/x402-echo/introduction" target="_blank" rel="noreferrer">
+              <div class="px-6 py-5 relative" data-component-part="card-content-container">
+                <div class="h-6 w-6 fill-gray-800  text-gray-800 " data-component-part="card-icon">
+                  <i data-lucide="book-open" class="h-6 w-6 text-gray-800 "></i>
+                </div>
+                <div>
+                  <h2 class="not-prose font-semibold text-base text-gray-800  mt-4" contenteditable="false" data-component-part="card-title">Echo Merchant Docs</h2>
+                  <div class="prose mt-1 font-normal text-sm leading-6 text-gray-600 " data-component-part="card-content">
+                    <span data-as="p">Learn how the demo merchant works under the hood.</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        
+        <!-- <div class="mt-6 pt-6 border-t border-neutral-200">
+          <div class="text-sm text-neutral-600 mb-3">Supported networks:</div>
+          <div class="flex flex-wrap gap-2">
+            <span class="badge capitalize">solana</span>
+            <span class="badge capitalize">base</span>
+            <span class="badge capitalize">avalanche</span>
+            <span class="badge capitalize">sei</span>
+            <span class="badge capitalize">iotex</span>
+          </div>
+        </div> -->
+      </div>
+    </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="py-12 w-full">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-2xl font-semibold mb-2">Pricing</h2>
+      <ul class="not-prose mb-6 pb-[1px] flex-none min-w-full overflow-auto border-b border-gray-400 gap-x-6 flex ">
+        <li>
+          <div class="flex text-sm items-center gap-1.5 leading-6 font-semibold whitespace-nowrap pt-3 pb-2.5 -mb-px max-w-max border-b text-primary border-current">
+            Choose a plan that fits your volume.
+          </div>
+        </li>
+      </ul>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Free -->
+        <div class="relative rounded-2xl bg-white border border-black shadow-md hover:shadow-xl ring-1 ring-black/5 transition-shadow transform scale-105">
+          <div class="absolute right-4 -top-3"><span class="badge bg-black text-white border-black">Most popular</span></div>
+          <div class="px-6 py-6">
+            <div class="text-xl font-bold uppercase tracking-wide text-neutral-900">FREE</div>
+            <!-- <div class="mt-2 text-base font-semibold tracking-tight text-neutral-800">Up to 100,000 settlements / month</div> -->
+            <ul class="mt-5 space-y-2 text-sm text-neutral-700">
+              <li class="flex items-center gap-2"><i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i><span>100,000 settlements per month</span></li>
+              <li class="flex items-center gap-2"><i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i><span>4 requests per second</span></li>
+              <li class="flex items-center gap-2"><i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i><span>480 burst requests per minute</span></li>
+            </ul>
+            <div class="mt-5 text-sm font-semibold text-neutral-900">0 PalPaxAI</div>
+            <div class="mt-4">
+              <div class="btn bg-green-600 text-white border-green-600 w-full justify-center cursor-default hover:bg-green-700 hover:border-green-700 transition-colors">Default plan</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Basic -->
+        <div class="relative rounded-2xl bg-white border border-neutral-200 shadow-sm hover:shadow-lg transition-shadow">
+          <div class="absolute right-4 -top-3"><span class="badge bg-neutral-800 text-white border-neutral-800">Coming soon</span></div>
+          <div class="px-6 py-6">
+            <div class="text-xl font-bold uppercase tracking-wide text-neutral-900">BASIC</div>
+            <!-- <div class="mt-2 text-base font-semibold tracking-tight text-neutral-800">Up to 500,000 settlements / month</div> -->
+            <ul class="mt-5 space-y-2 text-sm text-neutral-700">
+              <li class="flex items-center gap-2"><i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i><span>500,000 settlements per month</span></li>
+              <li class="flex items-center gap-2"><i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i><span>10 requests per second</span></li>
+              <li class="flex items-center gap-2"><i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i><span>1200 burst requests per minute</span></li>
+            </ul>
+            <div class="mt-5 text-sm font-semibold text-neutral-900">$1500 worth of PalPaxAI</div>
+            <div class="mt-4">
+              <a href="#" aria-disabled="true" tabindex="-1" onclick="return false;" class="btn w-full justify-center bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed pointer-events-none">Coming soon</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pro -->
+        <div class="relative rounded-2xl bg-white border border-neutral-200 shadow-sm hover:shadow-lg transition-shadow">
+          <div class="absolute right-4 -top-3"><span class="badge bg-neutral-800 text-white border-neutral-800">Coming soon</span></div>
+          <div class="px-6 py-6">
+            <div class="text-xl font-bold uppercase tracking-wide text-neutral-900">PRO</div>
+            <!-- <div class="mt-2 text-base font-semibold tracking-tight text-neutral-800">Up to 1M settlements / month</div> -->
+            <ul class="mt-5 space-y-2 text-sm text-neutral-700">
+              <li class="flex items-center gap-2"><i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i><span>1M settlements per month</span></li>
+              <li class="flex items-center gap-2"><i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i><span>25 requests per second</span></li>
+              <li class="flex items-center gap-2"><i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i><span>3000 burst requests per minute</span></li>
+            </ul>
+            <div class="mt-5 text-sm font-semibold text-neutral-900">$2800 worth of PalPaxAI</div>
+            <div class="mt-4">
+              <a href="#" aria-disabled="true" tabindex="-1" onclick="return false;" class="btn w-full justify-center bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed pointer-events-none">Coming soon</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Docs & Support -->
+    <section id="docs" class="py-12">
+      <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-6">
+        <div class="card">
+          <div class="p-6">
+            <div class="text-lg font-semibold">Documentation</div>
+            <div class="text-neutral-600">Everything you need to integrate x402 with PalPaxAI.</div>
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a class="btn btn-outline" href="https://docs.PalPaxAI.network/x402/facilitators/introduction" target="_blank" rel="noreferrer">Facilitator Overview</a>
+              <a class="btn btn-outline" href="https://docs.PalPaxAI.network/x402/quickstart" target="_blank" rel="noreferrer">Quickstart</a>
+              <a class="btn btn-outline" href="https://docs.PalPaxAI.network/x402/supported-networks" target="_blank" rel="noreferrer">Supported Networks</a>
+              <a class="btn btn-outline" href="https://docs.PalPaxAI.network/x402/clients" target="_blank" rel="noreferrer">Client Guide</a>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="p-6">
+            <div class="text-lg font-semibold">Support</div>
+            <div class="text-neutral-600">We’re here to help.</div>
+            <div class="mt-4 flex flex-wrap gap-3">
+              <a class="btn btn-primary gap-2" href="https://discord.gg/eWJRwMpebQ" target="_blank" rel="noreferrer"><i data-lucide="help-circle" class="h-4 w-4"></i> Join Discord</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-200 py-8">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-neutral-600">
+        <div class="flex items-center gap-2">
+          <span class="font-medium">© <span id="year"></span> PalPaxAI</span>
+          <span>•</span>
+          <a class="hover:underline" href="https://PalPaxAI.network/" target="_blank" rel="noreferrer">PalPaxAI.network</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <a class="hover:underline" href="https://docs.PalPaxAI.network/" target="_blank" rel="noreferrer">Docs</a>
+          <a class="hover:underline" href="{{GITHUB_URL}}" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="hover:underline" href="https://discord.gg/eWJRwMpebQ" target="_blank" rel="noreferrer">Discord</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const FACILITATOR_URL = "https://facilitator.PalPaxAI.network";
+      document.getElementById('facilitator-url').value = FACILITATOR_URL;
+      document.getElementById('facilitator-url-inline').textContent = FACILITATOR_URL;
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const copyBtn = document.getElementById('copy-btn');
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(FACILITATOR_URL);
+          const icon = copyBtn.querySelector('i[data-lucide]');
+          const label = copyBtn.querySelector('span');
+          if (icon && label) {
+            icon.setAttribute('data-lucide', 'check');
+            label.textContent = 'Copied';
+            lucide.createIcons();
+            setTimeout(() => {
+              icon.setAttribute('data-lucide', 'copy');
+              label.textContent = 'Copy';
+              lucide.createIcons();
+            }, 1500);
+          }
+        } catch (e) {}
+      });
+
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        const icon = mobileMenuBtn.querySelector('i[data-lucide]');
+        if (mobileMenu.classList.contains('hidden')) {
+          icon.setAttribute('data-lucide', 'menu');
+        } else {
+          icon.setAttribute('data-lucide', 'x');
+        }
+        lucide.createIcons();
+      });
+      
+      // Close mobile menu when clicking on links
+      const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+      mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          const icon = mobileMenuBtn.querySelector('i[data-lucide]');
+          icon.setAttribute('data-lucide', 'menu');
+          lucide.createIcons();
+        });
+      });
+
+      // Render lucide icons
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
